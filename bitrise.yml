@@ -1,0 +1,141 @@
+---
+format_version: '11'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: react-native
+trigger_map:
+- push_branch: main
+  workflow: primary
+- pull_request_source_branch: "*"
+  workflow: primary
+workflows:
+  primary:
+    steps:
+    - activate-ssh-key@4:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@6: {}
+    - install-missing-android-tools@2:
+        inputs:
+        - gradlew_path: "./android/gradlew"
+    - npm@1:
+        inputs:
+        - command: install
+    - script@1:
+        title: Install Detox Pre-Requisites
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            brew tap wix/brew
+
+            brew install applesimutils
+    - script@1:
+        title: Install Detox CLI and RN CLI
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            npm install -g react-native-cli
+
+            npm install -g detox-cli
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            cd ios; pod install; cd -;
+        title: CocoPod Install
+    - avd-manager@1:
+        inputs:
+        - emulator_id: Pixel2API30
+        - api_level: '28'
+    - wait-for-android-emulator@1: {}
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            detox build -c ios.sim.debug
+        title: Detox Build iOS
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            detox build -c android.emu.debug
+        title: Detox Build Android
+    - script@1:
+        title: Detox E2E iOS Test
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            detox test --configuration ios.sim.debug --record-videos all --take-screenshots all
+    - script@1:
+        title: Detox E2E Android Test
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            detox test --configuration android.emu.debug --record-videos all --take-screenshots all
+    - script@1:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            cp -R artifacts $BITRISE_DEPLOY_DIR
+        title: Publish Test Artifacts
+    - deploy-to-bitrise-io@1:
+        inputs:
+        - is_compress: 'true'
+app:
+  envs:
+  - opts:
+      is_expand: false
+    PROJECT_LOCATION: android
+  - opts:
+      is_expand: false
+    MODULE: app
+  - opts:
+      is_expand: false
+    VARIANT: debug
+  - opts:
+      is_expand: false
+    BITRISE_PROJECT_PATH: ios/BitriseRNDetox.xcworkspace
+  - opts:
+      is_expand: false
+    BITRISE_SCHEME: BitriseRNDetox
+  - opts:
+      is_expand: false
+    BITRISE_EXPORT_METHOD: development
