@@ -1,0 +1,6 @@
+module Pods_BitriseRNDetox {
+  umbrella header "Pods-BitriseRNDetox-umbrella.h"
+
+  export *
+  module * { export * }
+}

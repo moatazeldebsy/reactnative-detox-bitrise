@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="Gradle: com.wix:detox:18.19.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/284312f67a29f4f086ef6f0fc2e8ded6/jetified-detox-18.19.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/284312f67a29f4f086ef6f0fc2e8ded6/jetified-detox-18.19.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/284312f67a29f4f086ef6f0fc2e8ded6/jetified-detox-18.19.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/284312f67a29f4f086ef6f0fc2e8ded6/jetified-detox-18.19.0/jars/libs/genymotion-api-1.2.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../node_modules/detox/Detox-android/com/wix/detox/18.19.0/detox-18.19.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../node_modules/detox/Detox-android/com/wix/detox/18.19.0/detox-18.19.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
