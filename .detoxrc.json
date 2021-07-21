@@ -6,13 +6,13 @@
     "simulator": {
       "type": "ios.simulator",
       "device": {
-        "type": "iPhone 12"
+        "type": "iPhone 12 Pro Max"
       }
     },
     "emulator": {
       "type": "android.emulator",
       "device": {
-        "avdName": "Pixel_API_28_AOSP"
+        "avdName": "Pixel2API30"
       }
     }
   },
