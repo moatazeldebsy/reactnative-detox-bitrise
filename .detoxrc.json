@@ -13,6 +13,7 @@
       "type": "android.emulator",
       "device": {
         "avdName": "Pixel2API30"
+        
       }
     }
   },
