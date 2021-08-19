@@ -13,9 +13,6 @@ workflows:
     - activate-ssh-key@4:
         run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
     - git-clone@6: {}
-    - install-missing-android-tools@2:
-        inputs:
-        - gradlew_path: "./android/gradlew"
     - npm@1:
         inputs:
         - command: install
@@ -139,3 +136,6 @@ app:
   - opts:
       is_expand: false
     BITRISE_EXPORT_METHOD: development
+meta:
+  bitrise.io:
+    machine_type_id: g2.8core
