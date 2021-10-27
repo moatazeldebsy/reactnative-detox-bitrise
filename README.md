@@ -1,5 +1,6 @@
 ### Demo for running Detox - E2E UI Testing for React Native app
 
+
 - Install React Native CLI
 - Install Detox CLI
 - Open the Terminal and redirect to the app directory 
